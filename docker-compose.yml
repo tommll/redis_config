@@ -1,0 +1,27 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:10.4
+    restart: always
+    environment:
+      POSTGRES_USER: '${POSTGREST_DB_USER}'
+      POSTGRES_PASSWORD: '${POSTGREST_DB_PASSWORD}'
+      POSTGRES_DB: '${POSTGREST_DB_NAME}'
+    command: -p 5432
+    ports:
+      - "5432:5432"
+#    volumes:
+#      - "./pg_data:/var/lib/postgresql/data"
+
+  redis_test:
+    image: redis:5.0.3-alpine
+    restart: always
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+
+networks:
+  default:
+    external:
+      name: alienx_main
